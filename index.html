@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>OvaWeb | Разработка сайтов</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header id="main-header">
+    <div class="container nav-container">
+      <div class="logo">Ova<span>Web</span></div>
+      <nav>
+        <ul>
+          <li><a href="#about">О себе</a></li>
+          <li><a href="#services">Услуги</a></li>
+          <li><a href="#contact">Контакты</a></li>
+        </ul>
+      </nav>
+      <button class="mobile-menu-btn" id="mobileMenuBtn">☰</button>
+    </div>
+  </header>
+
+  <section class="hero">
+    <div class="container hero-content">
+      <h1>Профессиональная <span class="gradient-text">разработка</span> сайтов</h1>
+      <p>Создаю быстрые и современные сайты, которые работают на ваш результат</p>
+      <a href="https://t.me/kakusareta13" target="_blank" class="cta-button">Начать сотрудничество</a>
+    </div>
+    <div class="hero-shape"></div>
+  </section>
+
+  <main>
+    <section id="about" class="section">
+      <div class="container">
+        <h2 class="section-title">О себе</h2>
+        <div class="about-content">
+          <div class="profile-img">
+            <img src="img/jazz.jpg" alt="Фото Джаза" />
+          </div>
+          <div class="about-text">
+            <h3>Привет, я Джаз</h3>
+            <p>фриланс-разработчик, специализируюсь на создании современных и функциональных сайтов под ключ. Работаю напрямую с клиентами без посредников, полностью погружаясь в каждый проект.</p>
+            <p>Моя задача — не просто сделать красивый сайт, а создать инструмент, который будет работать на ваш бизнес: привлекать клиентов, усиливать доверие и увеличивать продажи.</p>
+            <div class="values-list">
+              <span>✨ Чистый код</span>
+              <span>⚡ Быстрая загрузка</span>
+              <span>📱 Адаптивность</span>
+              <span>🎯 Продуманный дизайн</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="services" class="section">
+      <div class="container">
+        <h2 class="section-title">Услуги</h2>
+        <div class="services-grid">
+          <div class="service-card">
+            <div class="service-icon">📈</div>
+            <h3>Разработка под ключ</h3>
+            <p>Полный цикл создания сайта: от идеи до запуска</p>
+          </div>
+          <div class="service-card">
+            <div class="service-icon">💻</div>
+            <h3>Многостраничные сайты</h3>
+            <p>Корпоративные сайты и сайты-визитки для бизнеса</p>
+          </div>
+          <div class="service-card">
+            <div class="service-icon">🎯</div>
+            <h3>Лендинги</h3>
+            <p>Продающие одностраничные сайты</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact" class="section">
+      <div class="container">
+        <h2 class="section-title">Контакты</h2>
+        <div class="contact-content">
+          <div class="contact-info">
+            <div class="contact-item">
+              <div class="contact-icon">📧</div>
+              <div>
+                <span class="contact-label">Email</span>
+                <span class="contact-value">jas.kakusareta@icloud.com</span>
+              </div>
+            </div>
+            <div class="contact-item">
+              <div class="contact-icon">📱</div>
+              <div>
+                <span class="contact-label">Телефон</span>
+                <span class="contact-value">+992 906 19 33 22</span>
+              </div>
+            </div>
+            <div class="contact-item">
+              <div class="contact-icon">📍</div>
+              <div>
+                <span class="contact-label">Адрес</span>
+                <span class="contact-value">г. Кулоб, ул. И. Сомони</span>
+              </div>
+            </div>
+            <div class="contact-item">
+              <div class="contact-icon">🕒</div>
+              <div>
+                <span class="contact-label">Часы работы</span>
+                <span class="contact-value">12:00 - 00:00, ежедневно</span>
+              </div>
+            </div>
+          </div>
+
+          <form class="contact-form" id="contactForm">
+            <div class="form-group">
+              <label for="name">Имя</label>
+              <input type="text" id="name" name="name" required />
+            </div>
+            <div class="form-group">
+              <label for="email">Email</label>
+              <input type="email" id="email" name="email" required />
+            </div>
+            <div class="form-group">
+              <label for="message">Сообщение</label>
+              <textarea id="message" name="message" rows="5" required></textarea>
+            </div>
+            <button type="submit" class="submit-btn">Отправить сообщение</button>
+          </form>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container footer-content">
+      <p>&copy; 2026 Ova corporation. Все права защищены.</p>
+      <p>Профессиональная разработка сайтов</p>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
