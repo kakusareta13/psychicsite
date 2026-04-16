@@ -3,141 +3,446 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>OvaWeb | Разработка сайтов</title>
-  <link rel="stylesheet" href="styles.css" />
+  <title>OvaWeb — Сайты и Telegram-боты</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0a0a0f;
+      --bg2: #13131c;
+      --bg3: #1a1a28;
+      --purple: #6c5ce7;
+      --purple2: #a463f5;
+      --glow: rgba(108,92,231,0.25);
+      --text: #ffffff;
+      --muted: #8888aa;
+      --dim: #555570;
+      --grad: linear-gradient(135deg, #6c5ce7, #a463f5);
+      --r: 14px;
+    }
+    *{margin:0;padding:0;box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);overflow-x:hidden;line-height:1.6}
+    
+    /* NAV */
+    header{position:fixed;top:0;width:100%;z-index:100;padding:0 2rem;background:rgba(10,10,15,0.85);backdrop-filter:blur(12px);border-bottom:1px solid rgba(108,92,231,0.15);transition:.3s}
+    .nav{max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:70px}
+    .logo{font-family:'Syne',sans-serif;font-size:1.6rem;font-weight:800;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+    .nav-links{display:flex;gap:2rem;list-style:none}
+    .nav-links a{color:var(--muted);text-decoration:none;font-size:.95rem;font-weight:500;transition:.2s}
+    .nav-links a:hover{color:#fff}
+    .nav-cta{padding:.5rem 1.4rem;background:var(--grad);border-radius:50px;color:#fff;text-decoration:none;font-weight:500;font-size:.9rem;transition:.2s}
+    .nav-cta:hover{opacity:.85;transform:translateY(-1px)}
+    .mob-btn{display:none;background:none;border:none;color:#fff;font-size:1.4rem;cursor:pointer}
+
+    /* HERO */
+    .hero{min-height:100vh;display:flex;align-items:center;position:relative;overflow:hidden}
+    .hero-bg{position:absolute;inset:0;background:radial-gradient(ellipse 60% 60% at 70% 40%,rgba(108,92,231,.18),transparent),radial-gradient(ellipse 40% 40% at 20% 80%,rgba(164,99,245,.1),transparent);pointer-events:none}
+    .hero-inner{max-width:1100px;margin:0 auto;padding:0 2rem;display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center;width:100%}
+    .hero-label{display:inline-flex;align-items:center;gap:.5rem;background:rgba(108,92,231,.12);border:1px solid rgba(108,92,231,.3);padding:.3rem 1rem;border-radius:50px;font-size:.8rem;color:var(--purple2);margin-bottom:1.5rem;font-weight:500}
+    .hero-label span{width:6px;height:6px;background:var(--purple2);border-radius:50%;animation:pulse 2s infinite}
+    @keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(1.3)}}
+    .hero h1{font-family:'Syne',sans-serif;font-size:3.4rem;font-weight:800;line-height:1.15;margin-bottom:1.2rem}
+    .hero h1 em{font-style:normal;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+    .hero-sub{font-size:1.05rem;color:var(--muted);margin-bottom:2rem;line-height:1.7;max-width:440px}
+    .hero-btns{display:flex;gap:1rem;flex-wrap:wrap}
+    .btn-primary{padding:.85rem 2rem;background:var(--grad);color:#fff;text-decoration:none;border-radius:50px;font-weight:600;transition:.2s;font-size:.95rem}
+    .btn-primary:hover{transform:translateY(-2px);box-shadow:0 10px 30px var(--glow)}
+    .btn-secondary{padding:.85rem 2rem;border:1px solid rgba(108,92,231,.4);color:var(--text);text-decoration:none;border-radius:50px;font-weight:500;transition:.2s;font-size:.95rem}
+    .btn-secondary:hover{border-color:var(--purple);background:rgba(108,92,231,.08)}
+    .hero-tags{display:flex;gap:.7rem;margin-top:1.8rem;flex-wrap:wrap}
+    .tag{background:var(--bg3);border:1px solid rgba(108,92,231,.2);padding:.3rem .9rem;border-radius:50px;font-size:.78rem;color:var(--muted)}
+    
+    /* HERO PHOTO */
+    .hero-photo{position:relative;display:flex;justify-content:center}
+    .photo-wrap{position:relative;width:340px;height:420px}
+    .photo-wrap::before{content:'';position:absolute;inset:-2px;background:var(--grad);border-radius:24px;z-index:0;opacity:.7}
+    .photo-wrap img{position:relative;z-index:1;width:100%;height:100%;object-fit:cover;object-position:top;border-radius:22px;display:block}
+    .photo-badge{position:absolute;z-index:2;background:var(--bg2);border:1px solid rgba(108,92,231,.3);border-radius:12px;padding:.6rem 1rem;font-size:.8rem;font-weight:500;backdrop-filter:blur(8px)}
+    .badge-exp{top:20px;right:-20px;color:var(--purple2)}
+    .badge-done{bottom:30px;left:-20px;color:#a8e6cf}
+    .badge-done span,.badge-exp span{display:block;font-size:1.1rem;font-weight:700;color:#fff}
+
+    /* SECTION */
+    section{padding:90px 0}
+    .wrap{max-width:1100px;margin:0 auto;padding:0 2rem}
+    .sec-label{font-size:.78rem;font-weight:600;color:var(--purple2);letter-spacing:.12em;text-transform:uppercase;margin-bottom:.8rem}
+    .sec-title{font-family:'Syne',sans-serif;font-size:2.2rem;font-weight:700;margin-bottom:1rem}
+    .sec-sub{color:var(--muted);max-width:520px;margin-bottom:3rem;font-size:1rem}
+
+    /* SERVICES */
+    .services{background:var(--bg2)}
+    .services-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem}
+    .svc{background:var(--bg3);border:1px solid rgba(108,92,231,.12);border-radius:var(--r);padding:2rem;transition:.3s;position:relative;overflow:hidden}
+    .svc::after{content:'';position:absolute;inset:0;background:var(--grad);opacity:0;transition:.3s;z-index:0}
+    .svc:hover{transform:translateY(-6px);border-color:var(--purple);box-shadow:0 20px 40px var(--glow)}
+    .svc:hover::after{opacity:.04}
+    .svc>*{position:relative;z-index:1}
+    .svc-icon{width:48px;height:48px;background:rgba(108,92,231,.15);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:1.4rem;margin-bottom:1.2rem}
+    .svc h3{font-family:'Syne',sans-serif;font-size:1.1rem;font-weight:700;margin-bottom:.6rem}
+    .svc p{color:var(--muted);font-size:.9rem;line-height:1.6}
+    .svc-list{margin-top:1rem;display:flex;flex-direction:column;gap:.4rem}
+    .svc-list li{color:var(--dim);font-size:.82rem;list-style:none;padding-left:1rem;position:relative}
+    .svc-list li::before{content:'→';position:absolute;left:0;color:var(--purple)}
+
+    /* PORTFOLIO */
+    .portfolio-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem}
+    .pcard{background:var(--bg2);border:1px solid rgba(108,92,231,.1);border-radius:var(--r);overflow:hidden;transition:.3s}
+    .pcard:hover{transform:translateY(-4px);border-color:rgba(108,92,231,.4);box-shadow:0 16px 40px var(--glow)}
+    .pcard-img{height:160px;background:var(--bg3);display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden}
+    .pcard-placeholder{font-size:2.5rem;opacity:.3}
+    .pcard-soon{position:absolute;top:10px;right:10px;background:rgba(108,92,231,.2);border:1px solid rgba(108,92,231,.3);color:var(--purple2);font-size:.7rem;padding:.2rem .6rem;border-radius:50px;font-weight:600}
+    .pcard-body{padding:1.2rem}
+    .pcard-body h4{font-family:'Syne',sans-serif;font-weight:700;margin-bottom:.4rem;font-size:1rem}
+    .pcard-body p{color:var(--muted);font-size:.85rem}
+    .pcard-type{display:inline-block;margin-top:.7rem;background:rgba(108,92,231,.1);color:var(--purple2);font-size:.72rem;padding:.2rem .7rem;border-radius:50px;font-weight:600}
+
+    /* ABOUT */
+    .about-inner{display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:center}
+    .about-photo{position:relative}
+    .about-photo-wrap{border-radius:20px;overflow:hidden;border:1px solid rgba(108,92,231,.2)}
+    .about-photo-wrap img{width:100%;display:block;object-fit:cover;object-position:top;max-height:480px}
+    .about-text p{color:var(--muted);margin-bottom:1rem;line-height:1.75}
+    .chips{display:flex;flex-wrap:wrap;gap:.7rem;margin-top:1.8rem}
+    .chip{background:var(--bg3);border:1px solid rgba(108,92,231,.2);padding:.4rem 1rem;border-radius:50px;font-size:.82rem;color:var(--muted);transition:.2s}
+    .chip:hover{border-color:var(--purple);color:#fff}
+    .about-stats{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-top:2rem}
+    .stat{background:var(--bg2);border:1px solid rgba(108,92,231,.12);border-radius:12px;padding:1.2rem}
+    .stat-num{font-family:'Syne',sans-serif;font-size:1.8rem;font-weight:800;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+    .stat-label{color:var(--muted);font-size:.82rem;margin-top:.2rem}
+
+    /* CONTACT */
+    .contact-section{background:var(--bg2)}
+    .contact-inner{display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:start}
+    .contact-ways{display:flex;flex-direction:column;gap:1rem;margin-top:2rem}
+    .cway{display:flex;align-items:center;gap:1rem;padding:1.2rem 1.5rem;background:var(--bg3);border:1px solid rgba(108,92,231,.1);border-radius:var(--r);text-decoration:none;transition:.3s;color:var(--text)}
+    .cway:hover{border-color:var(--purple);transform:translateX(6px)}
+    .cway-icon{width:44px;height:44px;background:rgba(108,92,231,.15);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.2rem;flex-shrink:0}
+    .cway-label{font-size:.78rem;color:var(--muted);margin-bottom:.1rem}
+    .cway-val{font-weight:500;font-size:.95rem}
+    .contact-cta{padding:2.5rem;background:var(--bg3);border:1px solid rgba(108,92,231,.15);border-radius:var(--r);text-align:center}
+    .contact-cta h3{font-family:'Syne',sans-serif;font-size:1.4rem;font-weight:700;margin-bottom:.8rem}
+    .contact-cta p{color:var(--muted);font-size:.9rem;margin-bottom:1.8rem;line-height:1.6}
+    .tg-btn{display:inline-flex;align-items:center;gap:.7rem;padding:1rem 2.2rem;background:var(--grad);color:#fff;text-decoration:none;border-radius:50px;font-weight:600;font-size:1rem;transition:.2s}
+    .tg-btn:hover{transform:translateY(-2px);box-shadow:0 12px 30px var(--glow)}
+    .tg-btn svg{width:20px;height:20px;fill:#fff}
+
+    /* FOOTER */
+    footer{padding:2.5rem 0;border-top:1px solid rgba(108,92,231,.12)}
+    .footer-inner{max-width:1100px;margin:0 auto;padding:0 2rem;display:flex;justify-content:space-between;align-items:center;color:var(--dim);font-size:.85rem}
+
+    /* MOBILE */
+    @media(max-width:900px){
+      .services-grid,.portfolio-grid{grid-template-columns:1fr 1fr}
+      .hero-inner{grid-template-columns:1fr;gap:2rem;padding-top:5rem}
+      .hero-photo{order:-1}
+      .photo-wrap{width:260px;height:320px}
+      .about-inner,.contact-inner{grid-template-columns:1fr;gap:2rem}
+    }
+    @media(max-width:600px){
+      .services-grid,.portfolio-grid{grid-template-columns:1fr}
+      .hero h1{font-size:2.2rem}
+      .nav-links{display:none}
+      .mob-btn{display:block}
+      .nav-links.open{display:flex;flex-direction:column;position:absolute;top:70px;left:0;right:0;background:rgba(10,10,15,.97);padding:1.5rem;border-bottom:1px solid rgba(108,92,231,.15)}
+      .badge-exp,.badge-done{display:none}
+      .footer-inner{flex-direction:column;gap:.5rem;text-align:center}
+    }
+  </style>
 </head>
 <body>
-  <header id="main-header">
-    <div class="container nav-container">
-      <div class="logo">Ova<span>Web</span></div>
-      <nav>
-        <ul>
-          <li><a href="#about">О себе</a></li>
-          <li><a href="#services">Услуги</a></li>
-          <li><a href="#contact">Контакты</a></li>
+
+<header id="hdr">
+  <div class="nav">
+    <div class="logo">Ova<span style="background:linear-gradient(135deg,#a463f5,#c084fc);-webkit-background-clip:text;background-clip:text;color:transparent">Web</span></div>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="#services">Услуги</a></li>
+      <li><a href="#portfolio">Работы</a></li>
+      <li><a href="#about">О себе</a></li>
+      <li><a href="#contact">Контакты</a></li>
+    </ul>
+    <a href="https://t.me/kakusareta13" target="_blank" class="nav-cta" style="display:none" id="navCta">Написать</a>
+    <button class="mob-btn" id="mobBtn">☰</button>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-inner">
+    <div>
+      <div class="hero-label"><span></span> Открыт для новых проектов</div>
+      <h1>Делаю сайты<br>и <em>Telegram‑боты</em><br>под ключ</h1>
+      <p class="hero-sub">Лендинги, корпоративные сайты, боты для бизнеса. Работаю напрямую — без посредников и лишних согласований.</p>
+      <div class="hero-btns">
+        <a href="https://t.me/kakusareta13" target="_blank" class="btn-primary">Написать в Telegram</a>
+        <a href="#portfolio" class="btn-secondary">Посмотреть работы</a>
+      </div>
+      <div class="hero-tags">
+        <span class="tag">HTML / CSS / JS</span>
+        <span class="tag">Python</span>
+        <span class="tag">Telegram Bot API</span>
+        <span class="tag">Адаптивная вёрстка</span>
+      </div>
+    </div>
+    <div class="hero-photo">
+      <div class="photo-wrap">
+        <img src="img/jazz.jpg" alt="Джаз" />
+        <div class="photo-badge badge-exp">
+          <span>2026</span>
+          начинающий
+        </div>
+        <div class="photo-badge badge-done">
+          <span>✓ На связи</span>
+          отвечаю быстро
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="services" class="services">
+  <div class="wrap">
+    <div class="sec-label">Что я делаю</div>
+    <h2 class="sec-title">Услуги</h2>
+    <div class="services-grid">
+      <div class="svc">
+        <div class="svc-icon">🌐</div>
+        <h3>Лендинг</h3>
+        <p>Продающая одностраничная страница для бизнеса, услуги или мероприятия</p>
+        <ul class="svc-list">
+          <li>Уникальный дизайн</li>
+          <li>Быстрая загрузка</li>
+          <li>Адаптив под мобильные</li>
         </ul>
-      </nav>
-      <button class="mobile-menu-btn" id="mobileMenuBtn">☰</button>
+      </div>
+      <div class="svc">
+        <div class="svc-icon">🏢</div>
+        <h3>Многостраничный сайт</h3>
+        <p>Корпоративный сайт или визитка с несколькими разделами</p>
+        <ul class="svc-list">
+          <li>Портфолио / каталог</li>
+          <li>Страница контактов</li>
+          <li>О компании / команде</li>
+        </ul>
+      </div>
+      <div class="svc">
+        <div class="svc-icon">🤖</div>
+        <h3>Telegram‑бот</h3>
+        <p>Автоматизация общения с клиентами прямо в мессенджере</p>
+        <ul class="svc-list">
+          <li>Приём заявок и записи</li>
+          <li>Каталог товаров</li>
+          <li>Уведомления и рассылки</li>
+        </ul>
+      </div>
     </div>
-  </header>
+  </div>
+</section>
 
-  <section class="hero">
-    <div class="container hero-content">
-      <h1>Профессиональная <span class="gradient-text">разработка</span> сайтов</h1>
-      <p>Создаю быстрые и современные сайты, которые работают на ваш результат</p>
-      <a href="https://t.me/kakusareta13" target="_blank" class="cta-button">Начать сотрудничество</a>
-    </div>
-    <div class="hero-shape"></div>
-  </section>
+<section id="portfolio">
+  <div class="wrap">
+    <div class="sec-label">Мои работы</div>
+    <h2 class="sec-title">Портфолио</h2>
+    <p class="sec-sub">Реальные проекты — живые и в разработке.</p>
+    <div class="portfolio-grid">
 
-  <main>
-    <section id="about" class="section">
-      <div class="container">
-        <h2 class="section-title">О себе</h2>
-        <div class="about-content">
-          <div class="profile-img">
-            <img src="img/jazz.jpg" alt="Фото Джаза" />
+      <div class="pcard">
+        <div class="pcard-img" style="background:#1a1a28;overflow:hidden">
+          <img src="ВСТАВЬ_ССЫЛКУ_НА_СКРИНШОТ"
+               onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
+               style="width:100%;height:100%;object-fit:cover" alt="Faberlic">
+          <span class="pcard-placeholder" style="display:none">🛍️</span>
+        </div>
+        <div class="pcard-body">
+          <h4>Интернет-магазин Faberlic</h4>
+          <p>Магазин косметики с каталогом, категориями и админ-панелью</p>
+          <div style="display:flex;gap:.5rem;flex-wrap:wrap;margin-top:.7rem">
+            <span class="pcard-type">Интернет-магазин</span>
+            <span class="pcard-type" style="background:rgba(164,99,245,.1);color:#c084fc">Firebase</span>
+            <span class="pcard-type" style="background:rgba(40,200,120,.08);color:#6ee7b7">Живой сайт</span>
           </div>
-          <div class="about-text">
-            <h3>Привет, я Джаз</h3>
-            <p>фриланс-разработчик, специализируюсь на создании современных и функциональных сайтов под ключ. Работаю напрямую с клиентами без посредников, полностью погружаясь в каждый проект.</p>
-            <p>Моя задача — не просто сделать красивый сайт, а создать инструмент, который будет работать на ваш бизнес: привлекать клиентов, усиливать доверие и увеличивать продажи.</p>
-            <div class="values-list">
-              <span>✨ Чистый код</span>
-              <span>⚡ Быстрая загрузка</span>
-              <span>📱 Адаптивность</span>
-              <span>🎯 Продуманный дизайн</span>
-            </div>
+          <a href="https://faberlic-shop-tj-6d20b.web.app/" target="_blank"
+             style="display:inline-block;margin-top:1rem;padding:.5rem 1.2rem;background:linear-gradient(135deg,#6c5ce7,#a463f5);color:#fff;text-decoration:none;border-radius:50px;font-size:.82rem;font-weight:600;transition:.2s"
+             onmouseover="this.style.opacity='.8'" onmouseout="this.style.opacity='1'">
+            Посмотреть сайт →
+          </a>
+        </div>
+      </div>
+
+      <div class="pcard">
+  <div class="pcard-img" style="background:#1a1a28;overflow:hidden">
+    <img src="ВСТАВЬ_ССЫЛКУ_НА_СКРИНШОТ"
+         onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
+         style="width:100%;height:100%;object-fit:cover" alt="Вписки МСК">
+    <span class="pcard-placeholder" style="display:none">🔥</span>
+  </div>
+  <div class="pcard-body">
+    <h4>Вписки Москва</h4>
+    <p>Лендинг для Telegram-сообщества с блогом, FAQ и страницей правил</p>
+    <div style="display:flex;gap:.5rem;flex-wrap:wrap;margin-top:.7rem">
+      <span class="pcard-type">Многостраничный</span>
+      <span class="pcard-type" style="background:rgba(40,200,120,.08);color:#6ee7b7">Живой сайт</span>
+    </div>
+    <a href="http://vpiska-mak.ru" target="_blank"
+       style="display:inline-block;margin-top:1rem;padding:.5rem 1.2rem;background:linear-gradient(135deg,#6c5ce7,#a463f5);color:#fff;text-decoration:none;border-radius:50px;font-size:.82rem;font-weight:600;transition:.2s"
+       onmouseover="this.style.opacity='.8'" onmouseout="this.style.opacity='1'">
+      Посмотреть сайт →
+    </a>
+  </div>
+</div>
+
+      <div class="pcard">
+        <div class="pcard-img" style="background:#1a1a28;overflow:hidden">
+          <img src="ВСТАВЬ_ССЫЛКУ_НА_СКРИНШОТ"
+               onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
+               style="width:100%;height:100%;object-fit:cover" alt="">
+          <span class="pcard-placeholder" style="display:none">🤖</span>
+          <span class="pcard-soon">В работе</span>
+        </div>
+        <div class="pcard-body">
+          <h4>Бот для записи клиентов</h4>
+          <p>Демо-бот: запись на приём, напоминания, уведомления</p>
+          <div style="display:flex;gap:.5rem;flex-wrap:wrap;margin-top:.7rem">
+            <span class="pcard-type">Telegram-бот</span>
           </div>
         </div>
       </div>
-    </section>
 
-    <section id="services" class="section">
-      <div class="container">
-        <h2 class="section-title">Услуги</h2>
-        <div class="services-grid">
-          <div class="service-card">
-            <div class="service-icon">📈</div>
-            <h3>Разработка под ключ</h3>
-            <p>Полный цикл создания сайта: от идеи до запуска</p>
-          </div>
-          <div class="service-card">
-            <div class="service-icon">💻</div>
-            <h3>Многостраничные сайты</h3>
-            <p>Корпоративные сайты и сайты-визитки для бизнеса</p>
-          </div>
-          <div class="service-card">
-            <div class="service-icon">🎯</div>
-            <h3>Лендинги</h3>
-            <p>Продающие одностраничные сайты</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section id="contact" class="section">
-      <div class="container">
-        <h2 class="section-title">Контакты</h2>
-        <div class="contact-content">
-          <div class="contact-info">
-            <div class="contact-item">
-              <div class="contact-icon">📧</div>
-              <div>
-                <span class="contact-label">Email</span>
-                <span class="contact-value">jas.kakusareta@icloud.com</span>
-              </div>
-            </div>
-            <div class="contact-item">
-              <div class="contact-icon">📱</div>
-              <div>
-                <span class="contact-label">Телефон</span>
-                <span class="contact-value">+992 906 19 33 22</span>
-              </div>
-            </div>
-            <div class="contact-item">
-              <div class="contact-icon">📍</div>
-              <div>
-                <span class="contact-label">Адрес</span>
-                <span class="contact-value">г. Кулоб, ул. И. Сомони</span>
-              </div>
-            </div>
-            <div class="contact-item">
-              <div class="contact-icon">🕒</div>
-              <div>
-                <span class="contact-label">Часы работы</span>
-                <span class="contact-value">12:00 - 00:00, ежедневно</span>
-              </div>
-            </div>
-          </div>
-
-          <form class="contact-form" id="contactForm">
-            <div class="form-group">
-              <label for="name">Имя</label>
-              <input type="text" id="name" name="name" required />
-            </div>
-            <div class="form-group">
-              <label for="email">Email</label>
-              <input type="email" id="email" name="email" required />
-            </div>
-            <div class="form-group">
-              <label for="message">Сообщение</label>
-              <textarea id="message" name="message" rows="5" required></textarea>
-            </div>
-            <button type="submit" class="submit-btn">Отправить сообщение</button>
-          </form>
-        </div>
-      </div>
-    </section>
-  </main>
-
-  <footer>
-    <div class="container footer-content">
-      <p>&copy; 2026 Ova corporation. Все права защищены.</p>
-      <p>Профессиональная разработка сайтов</p>
     </div>
-  </footer>
+  </div>
+</section>
 
-  <script src="script.js"></script>
+<section id="about">
+  <div class="wrap">
+    <div class="about-inner">
+      <div class="about-photo">
+        <div class="about-photo-wrap">
+          <img src="img/jazz.jpg" alt="Джаз" />
+        </div>
+      </div>
+      <div class="about-text">
+        <div class="sec-label">Обо мне</div>
+        <h2 class="sec-title">Привет, я Джаз</h2>
+        <p>Фриланс-разработчик из Кулоба. Делаю сайты и Telegram-боты — работаю напрямую с клиентами без посредников, вникаю в каждый проект.</p>
+        <p>Моя цель — не просто красивый сайт, а инструмент который работает: привлекает клиентов, вызывает доверие, упрощает коммуникацию через ботов.</p>
+        <div class="chips">
+          <span class="chip">HTML / CSS</span>
+          <span class="chip">JavaScript</span>
+          <span class="chip">Python</span>
+          <span class="chip">Telegram Bot API</span>
+          <span class="chip">Адаптивная вёрстка</span>
+          <span class="chip">Git</span>
+        </div>
+        <div class="about-stats">
+          <div class="stat">
+            <div class="stat-num">∞</div>
+            <div class="stat-label">Идей в голове</div>
+          </div>
+          <div class="stat">
+            <div class="stat-num">24ч</div>
+            <div class="stat-label">Время ответа</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="contact" class="contact-section">
+  <div class="wrap">
+    <div class="contact-inner">
+      <div>
+        <div class="sec-label">Связаться</div>
+        <h2 class="sec-title">Обсудим проект?</h2>
+        <p style="color:var(--muted);line-height:1.7;margin-bottom:.5rem">Расскажите что нужно сделать — отвечаю быстро, оцениваю честно.</p>
+        <div class="contact-ways">
+          <a href="https://t.me/kakusareta13" target="_blank" class="cway">
+            <div class="cway-icon">✈️</div>
+            <div>
+              <div class="cway-label">Telegram</div>
+              <div class="cway-val">@kakusareta13</div>
+            </div>
+          </a>
+          <a href="mailto:jas.kakusareta@icloud.com" class="cway">
+            <div class="cway-icon">📧</div>
+            <div>
+              <div class="cway-label">Email</div>
+              <div class="cway-val">jas.kakusareta@icloud.com</div>
+            </div>
+          </a>
+          <a href="tel:+992906193322" class="cway">
+            <div class="cway-icon">📱</div>
+            <div>
+              <div class="cway-label">Телефон / WhatsApp</div>
+              <div class="cway-val">+992 906 19 33 22</div>
+            </div>
+          </a>
+        </div>
+      </div>
+      <div class="contact-cta">
+        <h3>Готов начать прямо сейчас</h3>
+        <p>Напишите мне в Telegram — это быстрее всего. Обсудим задачу, сроки и стоимость.</p>
+        <a href="https://t.me/kakusareta13" target="_blank" class="tg-btn">
+          <svg viewBox="0 0 24 24"><path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.562 8.248l-1.97 9.289c-.145.658-.537.818-1.084.508l-3-2.21-1.447 1.394c-.16.16-.295.295-.605.295l.213-3.053 5.56-5.023c.242-.213-.054-.333-.373-.12L7.17 14.146l-2.96-.924c-.643-.204-.657-.643.136-.953l11.57-4.461c.537-.194 1.006.131.646.44z"/></svg>
+          Написать в Telegram
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-inner">
+    <span>© 2026 OvaWeb</span>
+    <span>Сайты и Telegram-боты под ключ</span>
+  </div>
+</footer>
+
+<script>
+const hdr = document.getElementById('hdr');
+const mobBtn = document.getElementById('mobBtn');
+const navLinks = document.getElementById('navLinks');
+const navCta = document.getElementById('navCta');
+
+window.addEventListener('scroll', () => {
+  if(window.scrollY > 80) {
+    hdr.style.background = 'rgba(10,10,15,0.97)';
+    navCta.style.display = 'inline-block';
+  } else {
+    hdr.style.background = 'rgba(10,10,15,0.85)';
+    navCta.style.display = 'none';
+  }
+});
+
+mobBtn.addEventListener('click', () => {
+  navLinks.classList.toggle('open');
+  mobBtn.style.transform = navLinks.classList.contains('open') ? 'rotate(90deg)' : '';
+});
+
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.addEventListener('click', e => {
+    e.preventDefault();
+    const el = document.querySelector(a.getAttribute('href'));
+    if(el) el.scrollIntoView({behavior:'smooth'});
+    navLinks.classList.remove('open');
+  });
+});
+
+const obs = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if(e.isIntersecting) {
+      e.target.style.opacity = '1';
+      e.target.style.transform = 'translateY(0)';
+    }
+  });
+}, {threshold: 0.1});
+
+document.querySelectorAll('.svc, .pcard, .cway, .stat').forEach(el => {
+  el.style.opacity = '0';
+  el.style.transform = 'translateY(24px)';
+  el.style.transition = 'opacity .5s ease, transform .5s ease';
+  obs.observe(el);
+});
+</script>
 </body>
 </html>
